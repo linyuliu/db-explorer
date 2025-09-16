@@ -18,6 +18,7 @@ public class ConnectionRequest {
     private String host;
     private int port;
     private String database;
+    private String schema;
     private String username;
     private String password;
 }
