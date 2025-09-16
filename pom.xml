@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yourcompany</groupId>
+    <artifactId>db-explorer-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>DB Explorer :: Parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <spring-boot.version>3.1.2</spring-boot.version>
+    </properties>
+
+    <modules>
+        <module>mysql-driver-v5</module>
+        <module>mysql-driver-v8</module>
+        <module>postgresql-driver</module>
+        <module>oracle-driver</module>
+        <module>sqlserver-driver</module>
+        <module>dameng-driver</module>
+        <module>kingbase-driver</module>
+        <module>db-explorer-app</module>
+    </modules>
+
+</project>
