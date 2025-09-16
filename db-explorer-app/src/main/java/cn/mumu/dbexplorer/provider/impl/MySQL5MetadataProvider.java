@@ -12,25 +12,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * MySQL 8.x metadata provider
+ * MySQL 5.x metadata provider
  */
 @Component
-public class MySQL8MetadataProvider extends AbstractDatabaseMetadataProvider {
+public class MySQL5MetadataProvider extends AbstractDatabaseMetadataProvider {
     
     @Override
     public String getDatabaseType() {
-        return "mysql8";
+        return "mysql5";
     }
     
     @Override
     public String getDriverClassName() {
-        return "com.mysql.cj.jdbc.Driver";
+        return "com.mysql.jdbc.Driver";
     }
     
     @Override
     public String buildUrl(ConnectionRequest request) {
         return String.format(
-            "jdbc:mysql://%s:%d/%s?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true",
+            "jdbc:mysql://%s:%d/%s?useSSL=false&characterEncoding=UTF-8",
             request.getHost(), request.getPort(), request.getDatabase()
         );
     }
@@ -57,14 +57,6 @@ public class MySQL8MetadataProvider extends AbstractDatabaseMetadataProvider {
             if (tableRs.next()) {
                 tableMetadata.setTableType(tableRs.getString("TABLE_TYPE"));
                 tableMetadata.setRemarks(tableRs.getString("REMARKS"));
-            }
-        }
-        
-        // Get columns - MySQL specific implementation
-        try (ResultSet columnsRs = metaData.getColumns(connection.getCatalog(), null, tableName, "%")) {
-            while (columnsRs.next()) {
-                // Implementation details for column metadata would go here
-                // For now, just basic structure
             }
         }
         

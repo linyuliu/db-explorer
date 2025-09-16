@@ -6,67 +6,60 @@ import cn.mumu.dbexplorer.provider.AbstractDatabaseMetadataProvider;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
- * MySQL 8.x metadata provider
+ * Oracle metadata provider
  */
 @Component
-public class MySQL8MetadataProvider extends AbstractDatabaseMetadataProvider {
+public class OracleMetadataProvider extends AbstractDatabaseMetadataProvider {
     
     @Override
     public String getDatabaseType() {
-        return "mysql8";
+        return "oracle";
     }
     
     @Override
     public String getDriverClassName() {
-        return "com.mysql.cj.jdbc.Driver";
+        return "oracle.jdbc.driver.OracleDriver";
     }
     
     @Override
     public String buildUrl(ConnectionRequest request) {
         return String.format(
-            "jdbc:mysql://%s:%d/%s?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true",
+            "jdbc:oracle:thin:@//%s:%d/%s",
             request.getHost(), request.getPort(), request.getDatabase()
         );
     }
     
     @Override
     protected boolean supportsSchema() {
-        return false; // MySQL uses databases, not schemas
+        return true;
+    }
+    
+    @Override
+    protected String getEffectiveSchema(Connection connection, ConnectionRequest request) throws SQLException {
+        if (request.getSchema() != null && !request.getSchema().trim().isEmpty()) {
+            return request.getSchema().toUpperCase();
+        }
+        // For Oracle, default to the username as schema (uppercase)
+        return request.getUsername().toUpperCase();
     }
     
     @Override
     public TableMetadata getTableMetadata(Connection connection, ConnectionRequest request, String tableName) throws SQLException {
-        DatabaseMetaData metaData = connection.getMetaData();
         TableMetadata tableMetadata = new TableMetadata();
         
         tableMetadata.setTableName(tableName);
-        tableMetadata.setSchema(request.getDatabase());
+        tableMetadata.setSchema(getEffectiveSchema(connection, request));
         tableMetadata.setCatalog(connection.getCatalog());
         tableMetadata.setColumns(new ArrayList<>());
         tableMetadata.setIndexes(new ArrayList<>());
         tableMetadata.setForeignKeys(new ArrayList<>());
         
-        // Get table info
-        try (ResultSet tableRs = metaData.getTables(connection.getCatalog(), null, tableName, null)) {
-            if (tableRs.next()) {
-                tableMetadata.setTableType(tableRs.getString("TABLE_TYPE"));
-                tableMetadata.setRemarks(tableRs.getString("REMARKS"));
-            }
-        }
-        
-        // Get columns - MySQL specific implementation
-        try (ResultSet columnsRs = metaData.getColumns(connection.getCatalog(), null, tableName, "%")) {
-            while (columnsRs.next()) {
-                // Implementation details for column metadata would go here
-                // For now, just basic structure
-            }
-        }
+        // Oracle specific metadata implementation would go here
         
         return tableMetadata;
     }
