@@ -78,7 +78,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.2</version>
-                 <configuration>
+                <configuration>
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>
                 <executions>
@@ -86,38 +86,6 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.mysql.jdbc</pattern>
-                                    <shadedPattern>com.mumu.dbexplorer.shaded.mysql5</shadedPattern>
-                                    <includes>
-                                        <include>com.mumu:mysql-driver-v5:jar:*</include>
-                                    </includes>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.mysql.cj</pattern>
-                                    <shadedPattern>com.mumu.dbexplorer.shaded.mysql8.cj</shadedPattern>
-                                    <includes>
-                                        <include>com.mumu:mysql-driver-v8:jar:*</include>
-                                    </includes>
-                                </relocation>
-                            </relocations>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

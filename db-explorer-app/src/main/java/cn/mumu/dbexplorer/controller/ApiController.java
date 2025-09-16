@@ -1,7 +1,8 @@
 package cn.mumu.dbexplorer.controller;
 
-
 import cn.mumu.dbexplorer.dto.ConnectionRequest;
+import cn.mumu.dbexplorer.dto.DatabaseInfo;
+import cn.mumu.dbexplorer.dto.TableMetadata;
 import cn.mumu.dbexplorer.service.ConnectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * API 控制器，处理前端请求
+ * Enhanced API controller with metadata endpoints
  * @author 18090
  */
 @RestController
@@ -28,19 +29,46 @@ public class ApiController {
     }
 
     /**
-     * 连接数据库并获取表结构
-     * @param request 连接请求参数
-     * @return 成功时返回表列表，失败时返回错误信息
+     * Connect to database and get basic information with table list
      */
     @PostMapping("/connect")
     public ResponseEntity<?> connectAndFetchTables(@RequestBody ConnectionRequest request) {
-        log.info("收到连接请求: {}", request.getDatabaseType());
+        log.info("Received connection request: {}", request.getDatabaseType());
         try {
-            List<String> tables = connectionService.connectAndFetchTables(request);
-            return ResponseEntity.ok(Map.of("tables", tables));
+            DatabaseInfo databaseInfo = connectionService.connectAndFetchTables(request);
+            return ResponseEntity.ok(databaseInfo);
         } catch (Exception e) {
-            log.error("连接失败，请求详情: {}", request, e);
-            // 返回具体的错误信息给前端
+            log.error("Connection failed for request: {}", request, e);
+            return ResponseEntity.badRequest().body(Map.of("error", e.getClass().getName() + ": " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Get detailed metadata for a specific table
+     */
+    @PostMapping("/table-metadata")
+    public ResponseEntity<?> getTableMetadata(@RequestBody ConnectionRequest request, @RequestParam String tableName) {
+        log.info("Getting metadata for table: {} in database: {}", tableName, request.getDatabaseType());
+        try {
+            TableMetadata metadata = connectionService.getTableMetadata(request, tableName);
+            return ResponseEntity.ok(metadata);
+        } catch (Exception e) {
+            log.error("Failed to get table metadata for {}: {}", tableName, e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getClass().getName() + ": " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Get list of schemas for databases that support them
+     */
+    @PostMapping("/schemas")
+    public ResponseEntity<?> getSchemas(@RequestBody ConnectionRequest request) {
+        log.info("Getting schemas for database: {}", request.getDatabaseType());
+        try {
+            List<String> schemas = connectionService.getSchemas(request);
+            return ResponseEntity.ok(Map.of("schemas", schemas));
+        } catch (Exception e) {
+            log.error("Failed to get schemas: {}", e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", e.getClass().getName() + ": " + e.getMessage()));
         }
     }

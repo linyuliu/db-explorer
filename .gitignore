@@ -44,3 +44,16 @@ build/
 *.diff
 *.patch
 *.tmp
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Vue.js build output
+db-ui/dist/
+db-ui/.DS_Store
+db-ui/coverage/
