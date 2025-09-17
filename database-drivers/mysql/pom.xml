@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yourcompany</groupId>
+        <artifactId>database-drivers</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>mysql-drivers</artifactId>
+    <name>DB Explorer :: MySQL Drivers</name>
+    <description>MySQL database drivers for different versions</description>
+
+    <dependencies>
+        <!-- MySQL 5.x Driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.49</version>
+        </dependency>
+        
+        <!-- MySQL 8.x Driver (new connector) -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Maven Shade Plugin for creating separate shaded versions -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <!-- Shade MySQL 5.x -->
+                    <execution>
+                        <id>shade-mysql5</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>mysql5-shaded</shadedClassifierName>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.mysql.jdbc</pattern>
+                                    <shadedPattern>com.yourcompany.dbexplorer.shaded.mysql5</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <artifactSet>
+                                <includes>
+                                    <include>mysql:mysql-connector-java:5.1.49</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                    <!-- Shade MySQL 8.x -->
+                    <execution>
+                        <id>shade-mysql8</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>mysql8-shaded</shadedClassifierName>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.mysql.cj</pattern>
+                                    <shadedPattern>com.yourcompany.dbexplorer.shaded.mysql8.cj</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.mysql:mysql-connector-j</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

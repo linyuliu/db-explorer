@@ -20,13 +20,13 @@ public enum DatabaseType {
 
     MYSQL8(
             "mysql8",
-            "com.yourcompany.dbexplorer.shaded.mysql8.cj.jdbc.Driver", // Shaded Driver
+            "com.mysql.cj.jdbc.Driver", // Standard MySQL 8.x driver
             "jdbc:mysql://%s:%d/%s?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true"
     ),
 
     MYSQL5(
             "mysql5",
-            "com.yourcompany.dbexplorer.shaded.mysql5.Driver", // Shaded Driver
+            "com.mysql.jdbc.Driver", // Standard MySQL 5.x driver
             "jdbc:mysql://%s:%d/%s?useSSL=false&characterEncoding=UTF-8"
     ),
 
