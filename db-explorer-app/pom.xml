@@ -35,10 +35,38 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Database Driver Modules -->
         <dependency>
             <groupId>com.yourcompany</groupId>
-            <artifactId>database-drivers</artifactId>
+            <artifactId>mysql-drivers</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yourcompany</groupId>
+            <artifactId>postgresql-drivers</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yourcompany</groupId>
+            <artifactId>oracle-drivers</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yourcompany</groupId>
+            <artifactId>sqlserver-drivers</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yourcompany</groupId>
+            <artifactId>dameng-drivers</artifactId>
+            <version>1.0.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.yourcompany</groupId>
+            <artifactId>kingbase-drivers</artifactId>
+            <version>1.0.0</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

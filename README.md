@@ -13,8 +13,11 @@
 - **人大金仓 (KingbaseES)** - 基于PostgreSQL的国产数据库
 
 ### 🏗️ 架构特性
-- **模块化设计** - 每个数据库都有独立的驱动模块和元数据提供者
+- **模块化驱动设计** - 每个数据库类型都有独立的驱动模块，支持版本隔离和专有数据库
 - **Schema感知** - 智能处理支持Schema的数据库（PostgreSQL、Oracle、KingbaseES、Dameng）
+- **版本兼容性** - 支持同一数据库的多个版本（如MySQL 5.x和8.x）
+- **Shading支持** - MySQL模块包含Maven Shade插件，避免版本冲突
+- **专有数据库支持** - 单独模块支持人大金仓、达梦等魔改数据库
 - **可扩展性** - 易于添加新的数据库支持
 - **现代化前端** - 基于Vue.js 3的响应式用户界面
 
@@ -55,7 +58,13 @@ db-explorer/
 │       ├── service/          # 业务服务层
 │       ├── controller/       # REST API控制器
 │       └── dto/             # 数据传输对象
-├── database-drivers/          # 数据库驱动模块（整合所有数据库驱动）
+├── database-drivers/          # 数据库驱动模块（按数据库类型分离）
+│   ├── mysql/               # MySQL驱动（支持5.x和8.x版本及shading）
+│   ├── postgresql/          # PostgreSQL驱动
+│   ├── oracle/              # Oracle驱动
+│   ├── sqlserver/           # SQL Server驱动
+│   ├── dameng/              # 达梦数据库驱动（专有）
+│   └── kingbase/            # 人大金仓驱动（专有）
 └── db-ui/                   # Vue.js 前端应用
     ├── src/
     │   ├── components/      # Vue组件
@@ -148,9 +157,15 @@ mvn install:install-file -Dfile=kingbase8.jar \
 
 ### 添加新数据库支持
 
-1. **添加数据库驱动依赖**
+1. **创建专用驱动模块**
+```bash
+# 在 database-drivers/ 下创建新的数据库类型目录
+mkdir database-drivers/newdb
+```
+
+2. **配置驱动模块 POM**
 ```xml
-<!-- 在 database-drivers/pom.xml 中添加新数据库驱动依赖 -->
+<!-- 在 database-drivers/newdb/pom.xml 中添加驱动依赖 -->
 <dependency>
     <groupId>com.example</groupId>
     <artifactId>new-database-driver</artifactId>
@@ -158,7 +173,13 @@ mvn install:install-file -Dfile=kingbase8.jar \
 </dependency>
 ```
 
-2. **实现元数据提供者**
+3. **更新父模块**
+```xml
+<!-- 在 database-drivers/pom.xml 中添加新模块 -->
+<module>newdb</module>
+```
+
+4. **实现元数据提供者**
 ```java
 @Component
 public class NewDatabaseMetadataProvider extends AbstractDatabaseMetadataProvider {
@@ -180,6 +201,17 @@ public class NewDatabaseMetadataProvider extends AbstractDatabaseMetadataProvide
     
     // 实现其他必要方法...
 }
+```
+
+5. **更新应用依赖**
+```xml
+<!-- 在 db-explorer-app/pom.xml 中添加新驱动模块依赖 -->
+<dependency>
+    <groupId>com.yourcompany</groupId>
+    <artifactId>newdb-drivers</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 ```
 
 3. **更新前端配置**

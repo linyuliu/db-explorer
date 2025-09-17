@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yourcompany</groupId>
+        <artifactId>database-drivers</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>kingbase-drivers</artifactId>
+    <name>DB Explorer :: Kingbase Drivers</name>
+    <description>Kingbase database drivers for different versions</description>
+
+    <dependencies>
+        <!-- Kingbase Driver -->
+        <!-- Note: If this dependency fails to resolve, install manually:
+             mvn install:install-file -Dfile=kingbase8.jar -DgroupId=cn.com.kingbase -DartifactId=kingbase8 -Dversion=8.6.0 -Dpackaging=jar -->
+        <dependency>
+            <groupId>cn.com.kingbase</groupId>
+            <artifactId>kingbase8</artifactId>
+            <version>8.6.0</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>opensource-only</id>
+            <!-- No dependencies for opensource-only profile since Kingbase is proprietary -->
+        </profile>
+    </profiles>
+</project>

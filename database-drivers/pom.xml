@@ -9,101 +9,29 @@
     </parent>
 
     <artifactId>database-drivers</artifactId>
+    <packaging>pom</packaging>
     <name>DB Explorer :: Database Drivers</name>
-    <description>Consolidated module containing all database drivers</description>
+    <description>Modular database drivers separated by database type and version</description>
 
-    <dependencies>
-        <!-- MySQL Drivers -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>9.1.0</version>
-        </dependency>
-
-        <!-- PostgreSQL Driver -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
-        </dependency>
-
-        <!-- Oracle Driver -->
-        <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc11</artifactId>
-            <version>21.9.0.0</version>
-        </dependency>
-
-        <!-- SQL Server Driver -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>12.8.1.jre11</version>
-        </dependency>
-
-        <!-- Dameng Driver -->
-        <!-- Note: If this dependency fails to resolve, install manually:
-             mvn install:install-file -Dfile=DmJdbcDriver18.jar -DgroupId=com.dameng -DartifactId=DmJdbcDriver18 -Dversion=8.1.3.140 -Dpackaging=jar -->
-        <dependency>
-            <groupId>com.dameng</groupId>
-            <artifactId>DmJdbcDriver18</artifactId>
-            <version>8.1.3.140</version>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Kingbase Driver -->
-        <!-- Note: If this dependency fails to resolve, install manually:
-             mvn install:install-file -Dfile=kingbase8.jar -DgroupId=cn.com.kingbase -DartifactId=kingbase8 -Dversion=8.6.0 -Dpackaging=jar -->
-        <dependency>
-            <groupId>cn.com.kingbase</groupId>
-            <artifactId>kingbase8</artifactId>
-            <version>8.6.0</version>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>mysql</module>
+        <module>postgresql</module>
+        <module>oracle</module>
+        <module>sqlserver</module>
+        <module>dameng</module>
+        <module>kingbase</module>
+    </modules>
 
     <profiles>
         <profile>
             <id>opensource-only</id>
-            <dependencies>
-                <!-- MySQL Drivers -->
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>8.0.33</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.mysql</groupId>
-                    <artifactId>mysql-connector-j</artifactId>
-                    <version>9.1.0</version>
-                </dependency>
-
-                <!-- PostgreSQL Driver -->
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>42.7.7</version>
-                </dependency>
-
-                <!-- Oracle Driver -->
-                <dependency>
-                    <groupId>com.oracle.database.jdbc</groupId>
-                    <artifactId>ojdbc11</artifactId>
-                    <version>21.9.0.0</version>
-                </dependency>
-
-                <!-- SQL Server Driver -->
-                <dependency>
-                    <groupId>com.microsoft.sqlserver</groupId>
-                    <artifactId>mssql-jdbc</artifactId>
-                    <version>12.8.1.jre11</version>
-                </dependency>
-            </dependencies>
+            <modules>
+                <module>mysql</module>
+                <module>postgresql</module>
+                <module>oracle</module>
+                <module>sqlserver</module>
+                <!-- Exclude proprietary drivers in opensource-only profile -->
+            </modules>
         </profile>
     </profiles>
 </project>
