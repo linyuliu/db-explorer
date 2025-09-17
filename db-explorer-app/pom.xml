@@ -37,37 +37,7 @@
 
         <dependency>
             <groupId>com.yourcompany</groupId>
-            <artifactId>mysql-driver-v5</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>mysql-driver-v8</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>postgresql-driver</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>oracle-driver</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>sqlserver-driver</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>dameng-driver</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-         <dependency>
-            <groupId>com.yourcompany</groupId>
-            <artifactId>kingbase-driver</artifactId>
+            <artifactId>database-drivers</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

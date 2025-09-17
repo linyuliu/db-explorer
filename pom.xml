@@ -17,13 +17,7 @@
     </properties>
 
     <modules>
-        <module>mysql-driver-v5</module>
-        <module>mysql-driver-v8</module>
-        <module>postgresql-driver</module>
-        <module>oracle-driver</module>
-        <module>sqlserver-driver</module>
-        <module>dameng-driver</module>
-        <module>kingbase-driver</module>
+        <module>database-drivers</module>
         <module>db-explorer-app</module>
     </modules>
 

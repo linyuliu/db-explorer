@@ -55,13 +55,7 @@ db-explorer/
 │       ├── service/          # 业务服务层
 │       ├── controller/       # REST API控制器
 │       └── dto/             # 数据传输对象
-├── mysql-driver-v5/          # MySQL 5.x 驱动模块
-├── mysql-driver-v8/          # MySQL 8.x 驱动模块
-├── postgresql-driver/        # PostgreSQL 驱动模块
-├── oracle-driver/           # Oracle 驱动模块
-├── sqlserver-driver/        # SQL Server 驱动模块
-├── dameng-driver/           # 达梦数据库驱动模块
-├── kingbase-driver/         # 人大金仓驱动模块
+├── database-drivers/          # 数据库驱动模块（整合所有数据库驱动）
 └── db-ui/                   # Vue.js 前端应用
     ├── src/
     │   ├── components/      # Vue组件
@@ -138,9 +132,9 @@ npm run dev
 
 ### 添加新数据库支持
 
-1. **创建驱动模块**
+1. **添加数据库驱动依赖**
 ```xml
-<!-- 在新模块的 pom.xml 中添加数据库驱动依赖 -->
+<!-- 在 database-drivers/pom.xml 中添加新数据库驱动依赖 -->
 <dependency>
     <groupId>com.example</groupId>
     <artifactId>new-database-driver</artifactId>
