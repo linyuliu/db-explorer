@@ -130,6 +130,22 @@ npm run dev
 
 ## 🏗️ 开发指南
 
+### 安装私有数据库驱动
+
+某些数据库驱动（如达梦、人大金仓）可能不在 Maven 中央仓库中。如果遇到构建错误，请手动安装这些驱动：
+
+```bash
+# 达梦数据库驱动
+mvn install:install-file -Dfile=DmJdbcDriver18.jar \
+    -DgroupId=com.dameng -DartifactId=DmJdbcDriver18 \
+    -Dversion=8.1.3.140 -Dpackaging=jar
+
+# 人大金仓驱动  
+mvn install:install-file -Dfile=kingbase8.jar \
+    -DgroupId=cn.com.kingbase -DartifactId=kingbase8 \
+    -Dversion=8.6.0 -Dpackaging=jar
+```
+
 ### 添加新数据库支持
 
 1. **添加数据库驱动依赖**
